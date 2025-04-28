@@ -1,0 +1,6 @@
+ng new frontend
+cd frontend
+npm install axios
+
+ng generate component students
+ng generate service student
