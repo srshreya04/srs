@@ -1,0 +1,36 @@
+<!-- frontend/src/app/students/students.component.html -->
+
+<div class="container">
+    <h1>Student Management</h1>
+  
+    <form (submit)="saveStudent(); $event.preventDefault();">
+      <input type="text" placeholder="Name" [(ngModel)]="student.name" name="name" required>
+      <input type="email" placeholder="Email" [(ngModel)]="student.email" name="email" required>
+      <input type="text" placeholder="Course" [(ngModel)]="student.course" name="course" required>
+      <button type="submit">{{ editingId ? 'Update' : 'Create' }}</button>
+      <button type="button" (click)="cancelEdit()" *ngIf="editingId">Cancel</button>
+    </form>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Course</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stu of students">
+          <td>{{ stu.name }}</td>
+          <td>{{ stu.email }}</td>
+          <td>{{ stu.course }}</td>
+          <td>
+            <button (click)="editStudent(stu)">Edit</button>
+            <button (click)="deleteStudent(stu._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
