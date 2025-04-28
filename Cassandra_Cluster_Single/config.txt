@@ -1,1 +1,2 @@
-
+1) Install apache cassandra for windows v
+Go to C:\Windows\System32\drivers\etc
