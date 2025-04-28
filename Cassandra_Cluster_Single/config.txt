@@ -9,3 +9,10 @@
   c:\opt\cassandra\3  
   Extract cassandra files in all these folders
 4) Go to conf\cassandra.yaml in each of the above folders
+   cluster_name: 'YourClusterName'
+   data_file_directories: - /opt/cassandra/1/data (chnage for 2,3)
+   commitlog_directory: /opt/cassandra/1/commitlog (chnage for 2,3)
+   saved_caches_directory: /opt/cassandra/1/saved_caches (chnage for 2,3)
+   - seeds: "127.0.0.2" (same for all 3)
+   listen_address: 127.0.0.2 (chnage for 2,3)
+   rpc_address: 127.0.0.2 (chnage for 2,3)
