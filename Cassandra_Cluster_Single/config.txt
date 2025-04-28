@@ -14,5 +14,5 @@
    commitlog_directory: /opt/cassandra/1/commitlog (chnage for 2,3)
    saved_caches_directory: /opt/cassandra/1/saved_caches (chnage for 2,3)
    - seeds: "127.0.0.2" (same for all 3)
-   listen_address: 127.0.0.2 (chnage for 2,3)
-   rpc_address: 127.0.0.2 (chnage for 2,3)
+   listen_address: 127.0.0.2 (chnage for 3,4)
+   rpc_address: 127.0.0.2 (chnage for 3,4)
