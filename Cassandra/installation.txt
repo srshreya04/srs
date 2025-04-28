@@ -1,9 +1,6 @@
 1) Download Cassandra zip
 2) Download JDK v8 or v11
-3) Copy the bin path to syst var
-4) Similarly download mongodb shell. Verify with cmd: mongod --version
-   >mogosh
-   >show dbs
-   > use db_name 
-                                       OR
-  Use MongoDB Compass/Atlas
+3) Set env var JDK_HOME="path_to_jdk"
+   PATH="jdk_bin_path"
+4) Set env var CASSANDRA_HOME="path_to_cassandra"
+   PATH="cassandra_bin_path"
