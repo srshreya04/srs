@@ -1,0 +1,9 @@
+1) Download Community Server Edition
+2) Select package for Windows with msi
+3) Copy the bin path to syst var
+4) Similarly download mongodb shell. Verify with cmd: mongod --version
+   >mogosh
+   >show dbs
+   > use db_name 
+                                       OR
+  Use MongoDB Compass/Atlas
