@@ -1,0 +1,23 @@
+1. Create MongoDB Atlas Account
+Click ➔ Build a Database
+Choose ➔ Free (Shared Cluster) (It’s called "M0 Cluster — Free forever".)
+Select Region ➔ Choose nearest to you (e.g., Mumbai, or any nearest city)
+Cluster Name ➔ (Leave default or name it Cluster0)
+
+2. Create a Database User
+Go to Database Deployment ➔ Your Cluster->Database Access (left menu)->Add New Database User.
+
+3. Configure Network Access
+Go to Network Access (left menu)-> Add IP Address.
+Select ➔ Allow Access from Anywhere (0.0.0.0/0)
+
+3. Create Your Database
+Cluster ➔ Browse Collections->Create Database (top-right button).
+
+4. Get Your Connection String
+Go to Database Deployments ➔ Your Cluster->Connect ➔ Connect your Application.
+Select: Driver: Node.js
+Copy the provided Connection String, looks like:
+mongodb+srv://admin:admin123@cluster0.abcd.mongodb.net/
+append the database name manually if not shown:
+mongodb+srv://admin:admin123@cluster0.abcd.mongodb.net/db22510007
