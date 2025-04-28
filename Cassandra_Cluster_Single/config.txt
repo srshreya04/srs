@@ -1,2 +1,11 @@
-1) Install apache cassandra for windows v
-Go to C:\Windows\System32\drivers\etc
+1) Install apache cassandra for windows v3.11.14
+2) Go to C:\Windows\System32\drivers\etc\hosts using nodepad as admin
+   Add  127.0.0.1 127.0.0.2 
+        127.0.0.1 127.0.0.3 
+        127.0.0.1 127.0.0.4
+3) Create folders like:
+  c:\opt\cassandra\1
+  c:\opt\cassandra\2
+  c:\opt\cassandra\3  
+  Extract cassandra files in all these folders
+4) Go to conf\cassandra.yaml in each of the above folders
