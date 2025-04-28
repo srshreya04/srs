@@ -11,3 +11,4 @@
           OR
    Go to cassandra bin: run cassandra.bat
    Open another bin cmd run: set PATH=replace_ur_py_path;%PATH%
+                             cqlsh
