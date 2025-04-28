@@ -1,6 +1,13 @@
-1) Download Cassandra zip
-2) Download JDK v8 or v11
-3) Set env var JDK_HOME="path_to_jdk"
+1) Download Cassandra zip (3.11.14)
+   https://archive.apache.org/dist/cassandra/3.11.14/apache-cassandra-3.11.14-bin.tar.gz
+2) Download JDK v8 or v11 (x64) (Oracle pwd Srshreya@07)
+3) Download python (v2.7.18)
+   https://www.python.org/ftp/python/2.7.18/python-2.7.18.msi
+4) Set env var JDK_HOME="path_to_jdk"
    PATH="jdk_bin_path"
-4) Set env var CASSANDRA_HOME="path_to_cassandra"
+5) Set env var CASSANDRA_HOME="path_to_cassandra"
    PATH="cassandra_bin_path"
+6) Set Py path in env var
+          OR
+   Go to cassandra bin: run cassandra.bat
+   Open another bin cmd run: set PATH=replace_ur_py_path;%PATH%
