@@ -16,3 +16,5 @@
    - seeds: "127.0.0.2" (same for all 3)
    listen_address: 127.0.0.2 (chnage for 3,4)
    rpc_address: 127.0.0.2 (chnage for 3,4)
+   storage_port= 7000 (change to 7100, 7200)
+   native_transport_port= 9042 (9142, 9242)
