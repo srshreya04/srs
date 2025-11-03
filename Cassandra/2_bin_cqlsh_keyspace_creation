@@ -1,7 +1,0 @@
-create keyspace if not exists student with replication = {'class': 'SimpleStrategy', 'replication_factor': '1'};
-cqlsh> use student;
-cqlsh:student> create table if not exists students(
-           ... id uuid primary key,
-           ... name text,
-           ... email text,
-           ... course text);
