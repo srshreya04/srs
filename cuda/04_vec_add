@@ -1,0 +1,110 @@
+%%writefile vector_add_speedup.cu
+#include <stdio.h>
+#include <cuda.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+__global__ void vectorAdd(float *A, float *B, float *C, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n)
+        C[i] = A[i] + B[i];
+}
+
+void random_floats(float *x, int n) {
+    for (int i = 0; i < n; i++)
+        x[i] = (float)rand() / RAND_MAX;
+}
+
+int main() {
+    int sizes[] = {100000, 1000000, 10000000};
+    int num_tests = 3;
+
+    FILE *fp = fopen("speedup_data.txt", "w");
+    if (!fp) {
+        printf("Error opening file to save results.\n");
+        return -1;
+    }
+
+    printf("Vector Addition using CPU and GPU (CUDA)\n");
+    printf("------------------------------------------------------------\n");
+
+    for (int t = 0; t < num_tests; t++) {
+        int N = sizes[t];
+        int size = N * sizeof(float);
+
+        float *h_A = (float*)malloc(size);
+        float *h_B = (float*)malloc(size);
+        float *h_C = (float*)malloc(size);
+        float *h_C_ref = (float*)malloc(size);
+
+        random_floats(h_A, N);
+        random_floats(h_B, N);
+
+        clock_t cpu_start = clock();
+        for (int i = 0; i < N; i++) {
+            h_C_ref[i] = h_A[i] + h_B[i];
+        }
+        clock_t cpu_end = clock();
+        double cpu_time = ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC;
+
+        float *d_A, *d_B, *d_C;
+        cudaMalloc((void**)&d_A, size);
+        cudaMalloc((void**)&d_B, size);
+        cudaMalloc((void**)&d_C, size);
+
+        cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+        cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+
+        int threadsPerBlock = 256;
+        int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+
+        cudaEvent_t start, stop;
+        cudaEventCreate(&start);
+        cudaEventCreate(&stop);
+
+        cudaEventRecord(start);
+        vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
+        cudaEventRecord(stop);
+        cudaEventSynchronize(stop);
+
+        float gpu_time = 0;
+        cudaEventElapsedTime(&gpu_time, start, stop);
+        gpu_time /= 1000.0;  // convert ms → seconds
+
+        cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+        cudaDeviceSynchronize();
+
+        // ---- Verify correctness ----
+        int correct = 1;
+        for (int i = 0; i < N; i++) {
+            if (fabs(h_C[i] - h_C_ref[i]) > 1e-5) {
+                correct = 0;
+                break;
+            }
+        }
+
+        printf("N = %d\n", N);
+        printf("CPU Time = %f s\n", cpu_time);
+        printf("GPU Time = %f s\n", gpu_time);
+        if (gpu_time > 0)
+            printf("Speedup = %.2fx\n", cpu_time / gpu_time);
+        else
+            printf("Speedup = N/A (GPU time too small)\n");
+        printf("Result Match: %s\n", correct ? "YES" : "NO");
+        printf("------------------------------------------------------------\n");
+
+        // ---- Save to file ----
+        fprintf(fp, "%d %lf %f\n", N, cpu_time, gpu_time);
+
+        // Free memory
+        free(h_A); free(h_B); free(h_C); free(h_C_ref);
+        cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+!nvcc vector_add_speedup.cu -o vector_add_speedup
+!./vector_add_speedup
